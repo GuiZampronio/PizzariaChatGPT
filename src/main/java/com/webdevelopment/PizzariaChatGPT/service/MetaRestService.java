@@ -1,4 +1,4 @@
-package com.webdevelopment.PizzariaChatGPT.controller;
+package com.webdevelopment.PizzariaChatGPT.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -26,7 +26,7 @@ public class MetaRestService {
     final private String metaURL = "https://graph.facebook.com/v16.0/";
 
     public void sendTextMessage(String toPhoneNumber, String messageToSend){
-        String finalUrl = metaURL.concat("/PHONE_NUMBER_ID/messages");
+        String finalUrl = metaURL.concat("/118006471258006/messages");  //118006471258006 is id of our server whatsapp number
         SendMessageDTO sendMessage = SendMessageDTO.builder()
                 .messaging_product("whatsapp")
                 .recipient_type("individual")
@@ -39,7 +39,7 @@ public class MetaRestService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth("XXXXXXXXXXX");
+        headers.setBearerAuth("EAARm9cZCVsBIBAEQ6wy2LnQhKjoIUvJq9ulR82TuZCeI39vvsfmhzb4hR17tjEDfmOe5H5K0H4sPlyZCWiDlnj4O2jKCb6RiJwAjFkiYjCmLhfj0ZCx2OkoxL9jpHFZC6JrWWpGclpNPg6wbzSnv7u91H7z525IBDVqqm0wzrwyedBttUqcUxgksqbYcrBlYjfywWcRhzQeR8LlReDlkZCkCCHIhyZCdfwZD");
 
         HttpEntity<String> request = new HttpEntity<>(sendMessageJson, headers);
 
