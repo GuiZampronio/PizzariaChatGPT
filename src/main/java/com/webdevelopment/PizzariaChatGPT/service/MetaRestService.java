@@ -39,12 +39,10 @@ public class MetaRestService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth("EAARm9cZCVsBIBAEQ6wy2LnQhKjoIUvJq9ulR82TuZCeI39vvsfmhzb4hR17tjEDfmOe5H5K0H4sPlyZCWiDlnj4O2jKCb6RiJwAjFkiYjCmLhfj0ZCx2OkoxL9jpHFZC6JrWWpGclpNPg6wbzSnv7u91H7z525IBDVqqm0wzrwyedBttUqcUxgksqbYcrBlYjfywWcRhzQeR8LlReDlkZCkCCHIhyZCdfwZD");
+        headers.setBearerAuth("EAARm9cZCVsBIBAK6DHh3T2WfFf0ZAvp4m3dXLkC0PI77FbP7LBgkGvDiwmQXeLp2RB5vEazvUpui2xTXE8ejlJXsYoKZAgxZCd7seLePCkZBHZAxMiOZAheEzVxyxeojLUE2gVmv8BOj9rv5Ya22EeNCoELJrbnuSGdkMtCFZAlYqHeZBPS0q1WzVdDvZBH8QYcl3VoKjYz5cNRkFZCiZBmk4QAcWWvGxo8hRUoZD");
 
         HttpEntity<String> request = new HttpEntity<>(sendMessageJson, headers);
 
-        String response = restTemplate.postForObject(finalUrl, request, String.class);
-        log.info(response);
-
+        restTemplate.postForObject(finalUrl, request, String.class);
     }
 }
