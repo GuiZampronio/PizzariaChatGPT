@@ -23,13 +23,17 @@ public class OpenAIRestService {
         @Autowired
         private RestTemplate restTemplate;
 
-        final private String openAIKey = "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";
+        final private String openAIKey = "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";
 
         final private String chatURL = "https://api.openai.com/v1/chat/completions";
 
         public String sendMessageChatGPT(String messageToAsk){
 
                 ArrayList<MessageChatDTO> messageToSend = new ArrayList<>();
+
+                MessageChatDTO context = new MessageChatDTO("system",  "ChatGPT você será um atendente de uma pizzaria, responde as mensagens de acordo. Algumas informações sobre a pizzaria: Endereço da pizzaria: Av 22 A, 1248; Cardápio: 1 - Pizza de 3 queijos - 10 reais; 2 - Pizza de 4 queijos - 20 reais; 3 - Calabresa - 30 reais; 4- Portuguesa - 40 reais; Fim do cardápio; Tempo de entrega - 45 a 60 min; Ingredientes caseiros;");
+                messageToSend.add(context);
+
                 MessageChatDTO messageChatDTO = new MessageChatDTO("user",  messageToAsk);
                 messageToSend.add(messageChatDTO);
 

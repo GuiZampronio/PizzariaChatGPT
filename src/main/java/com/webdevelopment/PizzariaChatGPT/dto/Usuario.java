@@ -9,7 +9,7 @@ import lombok.Setter;
 @Data
 public class Usuario {
     private String id;
+    private String nome;
     private String endereco;
     private String contato;
-    private String listaProduto;
 }
