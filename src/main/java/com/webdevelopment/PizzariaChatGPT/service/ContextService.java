@@ -53,6 +53,11 @@ public class ContextService {
 
         }
 
+        public void markAllOldMessagesAsFinished(String waID){
+                Integer customerID = clienteRepository.findCustomerIDByWaID(waID);
+                mensagemRepository.updateOldMessagesFromCustomerAsFinished(customerID);
+        }
+
 
         private ArrayList<MessageChatDTO> getOldMessagesFromCustomer(String waID){
                 Integer customerID = clienteRepository.findCustomerIDByWaID(waID);
@@ -75,12 +80,13 @@ public class ContextService {
         }
 
         private MessageChatDTO generateInitialContext(){
-                MessageChatDTO initialContext = new MessageChatDTO("system",  "ChatGPT você atuará como um atendente de uma pizzaria chamada Os Discipulos de Davi, responda as mensagens se passando o máximo possível como um humano. Segue informações da pizzaria/contexto:\\nAtua com delivery ou retirada no local\n" +
-                          "\\nEndereço da pizzaria : Av 24 A, 1515\n" +
-                          "\\nTempo de entrega estimado: 45 a 60 min\n" +
-                          "\\nPizzas artesanais com ingredientes de excelente qualidade\n" +
-                          "\\nSimule um cardápio de uma pizzaria brasileira comum sem ser necessário muitas opções, contendo também um cardápio de bebidas, ambos com os respectivos valores\n" +
-                          "\\nPara o funcionamento de nossa API, É EXTREMANTE IMPORTANTE quando você entender/der que o atendimento foi concluído e o pedido registrado, responda a mensagem para o cliente confirmando o pedido, porém iniciando a mensagem exatamente com a seguinte string:<Finalizado>");
+                MessageChatDTO initialContext = new MessageChatDTO("system",  "ChatGPT você atuará como um atendente de uma pizzaria chamada Os Discipulos de Davi, responda as mensagens se passando o máximo possível como um humano. Segue informações da pizzaria/contexto:" +
+                         "\\nAtua com delivery ou retirada no local, para concluir o pedido é estritamente necessário confirmar com o cliente a maneira que ele gostaria de receber a pizza" +
+                          "\\nEndereço da pizzaria : Av 24 A, 1515" +
+                          "\\nTempo de entrega estimado: 45 a 60 min" +
+                          "\\nPizzas artesanais com ingredientes de excelente qualidade" +
+                          "\\nSimule um cardápio de uma pizzaria brasileira comum sem ser necessário muitas opções, contendo também um cardápio de bebidas, ambos com os respectivos valores" +
+                          "\\nPara o funcionamento de nossa API, É EXTREMANTE IMPORTANTE quando você entender que o atendimento foi concluído e o pedido registrado, responda a mensagem para o cliente confirmando o pedido, porém iniciando a mensagem exatamente com a seguinte string:<Finalizado>");
                 return initialContext;
         }
 

@@ -36,8 +36,7 @@ public class OpenAIRestService {
 
                 RequestBodyChatGPTDTO requestBody = RequestBodyChatGPTDTO.builder()
                           .model("gpt-3.5-turbo")
-                          .temperature(0.5)
-                          .max_tokens(2048)
+                          .temperature(0.4)
                           .messages(messageToSend)
                           .build();
 
@@ -52,8 +51,18 @@ public class OpenAIRestService {
                 GPTResponse response = restTemplate.postForObject(chatURL, request, GPTResponse.class);
                 log.info(response);
 
-                contextService.addNewMessageWithResponseAtDatabase(newMessage, response.getChoices().get(0).getMessage().getContent(), waID);
+                String responseFromGPT = response.getChoices().get(0).getMessage().getContent();
 
-                return response.getChoices().get(0).getMessage().getContent();
+                contextService.addNewMessageWithResponseAtDatabase(newMessage, responseFromGPT, waID);
+
+                if(responseFromGPT.contains("<Finalizado>")){
+                        log.info("Pedido foi considerado finalizado pelo GPT, marcando mensagens antigas como atendidas...");
+                        String finalResponseFromGPT = responseFromGPT.replace("<Finalizado>", "");
+                        contextService.markAllOldMessagesAsFinished(waID);
+                        return finalResponseFromGPT;
+                }else{
+                        return responseFromGPT;
+                }
+
         }
 }

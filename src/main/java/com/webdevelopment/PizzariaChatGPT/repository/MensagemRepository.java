@@ -10,4 +10,8 @@ public interface MensagemRepository extends JpaRepository<Mensagem, Long> {
         @Query(value = "SELECT * FROM public.mensagem m WHERE m.cliente_id = ?1 AND m.atendimentoconcluido = false ORDER BY m.timestamp ASC",
                         nativeQuery = true)
         List<Mensagem> findActiveOldMessagesByCustomerID(Integer customerId);
+
+        @Query(value = "UPDATE public.mensagem m SET atendimentoConcluido = true WHERE m.cliente_id = ?1 AND m.atendimentoConcluido = false",
+                        nativeQuery = true)
+        void updateOldMessagesFromCustomerAsFinished(Integer customerId);
 }
