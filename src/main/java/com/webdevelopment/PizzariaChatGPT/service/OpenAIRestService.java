@@ -6,6 +6,7 @@ import com.webdevelopment.PizzariaChatGPT.dto.OpenAIPackageDTO.MessageChatDTO;
 import com.webdevelopment.PizzariaChatGPT.dto.OpenAIPackageDTO.RequestBodyChatGPTDTO;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -26,9 +27,12 @@ public class OpenAIRestService {
         @Autowired
         private ContextService contextService;
 
-        final private String openAIKey = "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";
+        @Autowired
+        private Environment env;
 
-        final private String chatURL = "https://api.openai.com/v1/chat/completions";
+        final private String openAIKey = env.getProperty("openAIKey");
+
+        final private String chatURL = env.getProperty("chatUrl");
 
         public String sendMessageChatGPT(String newMessage, String waID){
 

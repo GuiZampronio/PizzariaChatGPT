@@ -7,6 +7,7 @@ import com.webdevelopment.PizzariaChatGPT.dto.MetaPackageDTO.SendMessageDTO;
 import com.webdevelopment.PizzariaChatGPT.dto.MetaPackageDTO.TextDTO;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -23,7 +24,12 @@ public class MetaRestService {
     @Autowired
     private Gson gson;
 
-    final private String metaURL = "https://graph.facebook.com/v16.0/";
+    @Autowired
+    private Environment env;
+
+    final private String metaURL = env.getProperty("metaUrl");
+
+    final private String metaBearerToken = env.getProperty("metaBearerToken");
 
     public void sendTextMessage(String toPhoneNumber, String messageToSend){
         String finalUrl = metaURL.concat("/118006471258006/messages");  //118006471258006 is id of our server whatsapp number
@@ -39,7 +45,7 @@ public class MetaRestService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth("EAARm9cZCVsBIBAOlA696fubwq4jYUtXyrBj2Ftfr0OXmzHhBPFkOZAohr6uZATLO6cZCgP0KEXKLKe3oxcuTlyeKiG2GmX0Ig5tt6HQKO0ME92RcZAMI2GrZBEHZBZAZCSK5mJEfI81druzM4PuJMqmBu5pNxTHEOTFAij6lTN6pcIOe7a6ikp84jMGZB7qvc0cPTdS2YLSTZAmZB0t2ZBZCNu6Sszol3tafsExy8ZD");
+        headers.setBearerAuth(metaBearerToken);
 
         HttpEntity<String> request = new HttpEntity<>(sendMessageJson, headers);
 
