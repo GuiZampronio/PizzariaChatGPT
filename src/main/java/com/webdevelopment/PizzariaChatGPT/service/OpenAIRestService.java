@@ -23,20 +23,16 @@ public class OpenAIRestService {
         @Autowired
         private RestTemplate restTemplate;
 
-        final private String openAIKey = "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";
+        @Autowired
+        private ContextService contextService;
+
+        final private String openAIKey = "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";
 
         final private String chatURL = "https://api.openai.com/v1/chat/completions";
 
-        public String sendMessageChatGPT(String messageToAsk){
+        public String sendMessageChatGPT(String newMessage, String waID){
 
-                ArrayList<MessageChatDTO> messageToSend = new ArrayList<>();
-
-                MessageChatDTO context = new MessageChatDTO("system",  "ChatGPT você será um atendente de uma pizzaria, responde as mensagens de acordo. Algumas informações sobre a pizzaria: Endereço da pizzaria: Av 22 A, 1248; Cardápio: 1 - Pizza de 3 queijos - 10 reais; 2 - Pizza de 4 queijos - 20 reais; 3 - Calabresa - 30 reais; 4- Portuguesa - 40 reais; Fim do cardápio; Tempo de entrega - 45 a 60 min; Ingredientes caseiros;");
-                messageToSend.add(context);
-
-                MessageChatDTO messageChatDTO = new MessageChatDTO("user",  messageToAsk);
-                messageToSend.add(messageChatDTO);
-
+                ArrayList<MessageChatDTO> messageToSend = contextService.buildContext(newMessage, waID);
 
                 RequestBodyChatGPTDTO requestBody = RequestBodyChatGPTDTO.builder()
                           .model("gpt-3.5-turbo")
@@ -55,6 +51,9 @@ public class OpenAIRestService {
 
                 GPTResponse response = restTemplate.postForObject(chatURL, request, GPTResponse.class);
                 log.info(response);
+
+                contextService.addNewMessageWithResponseAtDatabase(newMessage, response.getChoices().get(0).getMessage().getContent(), waID);
+
                 return response.getChoices().get(0).getMessage().getContent();
         }
 }

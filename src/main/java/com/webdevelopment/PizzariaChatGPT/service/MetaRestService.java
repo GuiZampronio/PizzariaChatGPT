@@ -39,9 +39,11 @@ public class MetaRestService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth("EAARm9cZCVsBIBAIUL2XYZBFzROEzBYb6VMpIaZBB17GvxMBJqwGda7rNKDQ9THKkaOFFn1g1jXhS8jdV1iKNZBrCaz2eU3ZAg4hWGvZBvrqYQjwSo1dZBYxDNK9FWlE0cOjsVLGAsZAb89sG3ZCVZBpJzZBKcdpzZBImZATTT6LXLBTbZCRpn7eVPRR1LqnzPraCtQNY6R1KPcFTbfYyZCtxlqmB5OgC8B3uWbQ95YZD");
+        headers.setBearerAuth("EAARm9cZCVsBIBAOlA696fubwq4jYUtXyrBj2Ftfr0OXmzHhBPFkOZAohr6uZATLO6cZCgP0KEXKLKe3oxcuTlyeKiG2GmX0Ig5tt6HQKO0ME92RcZAMI2GrZBEHZBZAZCSK5mJEfI81druzM4PuJMqmBu5pNxTHEOTFAij6lTN6pcIOe7a6ikp84jMGZB7qvc0cPTdS2YLSTZAmZB0t2ZBZCNu6Sszol3tafsExy8ZD");
 
         HttpEntity<String> request = new HttpEntity<>(sendMessageJson, headers);
+
+        log.info("Sending Message to customer!");
 
         restTemplate.postForObject(finalUrl, request, String.class);
     }
