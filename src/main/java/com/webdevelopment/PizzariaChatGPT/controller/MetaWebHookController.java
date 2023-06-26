@@ -5,6 +5,7 @@ import com.webdevelopment.PizzariaChatGPT.service.MessageProcessorService;
 import com.webdevelopment.PizzariaChatGPT.service.MetaRestService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,12 +24,11 @@ public class MetaWebHookController {
       @Autowired
       private MessageProcessorService messageProcessorService;
 
-      @Autowired
-      private Environment env;
+      @Value("${chaveWebHook}")
+      private String chaveWebHook;
 
       @GetMapping
       public Integer authenticateChallenge(@RequestParam(name = "hub.mode") String mode, @RequestParam(name = "hub.challenge") Integer challenge,  @RequestParam(name = "hub.verify_token") String verify_token){
-           String chaveWebHook = env.getProperty("chaveWebHook");
             if(verify_token.equals(chaveWebHook)){
                   return challenge;
             }else{

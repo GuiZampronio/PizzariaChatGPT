@@ -39,6 +39,7 @@ public class MessageProcessorService {
                         return HttpStatus.OK;
                 }catch (Exception e){
                         log.info("Not a message"); // receber uma string e logar para validar o que está sendo pego no catch e arrumar essa gambiarra
+                        log.info(e.getMessage());
                         return HttpStatus.OK;
                 }
 

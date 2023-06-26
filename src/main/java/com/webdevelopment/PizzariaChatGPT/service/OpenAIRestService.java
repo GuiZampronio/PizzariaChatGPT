@@ -6,6 +6,7 @@ import com.webdevelopment.PizzariaChatGPT.dto.OpenAIPackageDTO.MessageChatDTO;
 import com.webdevelopment.PizzariaChatGPT.dto.OpenAIPackageDTO.RequestBodyChatGPTDTO;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -27,12 +28,11 @@ public class OpenAIRestService {
         @Autowired
         private ContextService contextService;
 
-        @Autowired
-        private Environment env;
+        @Value("${openAIKey}")
+        private String openAIKey;
 
-        final private String openAIKey = env.getProperty("openAIKey");
-
-        final private String chatURL = env.getProperty("chatUrl");
+        @Value("${chatUrl}")
+        private String chatURL;
 
         public String sendMessageChatGPT(String newMessage, String waID){
 
@@ -40,7 +40,7 @@ public class OpenAIRestService {
 
                 RequestBodyChatGPTDTO requestBody = RequestBodyChatGPTDTO.builder()
                           .model("gpt-3.5-turbo")
-                          .temperature(0.4)
+                          .temperature(0.5)
                           .messages(messageToSend)
                           .build();
 
